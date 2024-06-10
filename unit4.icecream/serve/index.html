@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ice Cream Shop Flavors</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Ice Cream Shop Flavors</h1>
+      <table id="flavors-table">
+        <thead>
+          <tr>
+            <th>ID's</th>
+            <th>Name's</th>
+            <th>Favorites</th>
+          </tr>
+        </thead>
+        <tbody>
+        
+        </tbody>
+      </table>
+    </div>
+    <script>
+      async function fetchFlavors() {
+        try {
+          const response = await fetch("/api/flavors");
+          const flavors = await response.json();
+          const tableBody = document
+            .getElementById("flavors-table")
+            .querySelector("tbody");
+          flavors.forEach((flavor) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+            <td>${flavor.id}</td>
+            <td>${flavor.name}</td>
+            <td>${flavor.is_favorite ? "Yes" : "No"}</td>
+          `;
+            tableBody.appendChild(row);
+          });
+        } catch (error) {
+          console.error("Error fetching flavors:", error);
+        }
+      }
+
+      fetchFlavors();
+    </script>
+  </body>
+</html>
